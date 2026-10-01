@@ -7,9 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // !! SENGAJA VULNERABLE - JANGAN DIPAKAI DI PRODUKSI !!
-    // Query dibangun dengan string concatenation langsung dari input user,
-    // tanpa sanitasi / parameterized query. Inilah yang membuka celah SQL Injection.
     $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 
     $res = pg_query($conn, $query);
@@ -37,8 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
 <div class="container">
-    <h1>🔓 Login (VULNERABLE ke SQL Injection)</h1>
-    <p class="subtitle">Query dibangun dengan string concatenation langsung — coba eksploitasi!</p>
+    <h1>Login (VULNERABLE)</h1>
 
     <form method="POST">
         <label>Username</label>
@@ -73,16 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     <?php endif; ?>
 
-    <div class="hints">
-        <strong>Contoh payload untuk dicoba (edukasi):</strong>
-        <ul>
-            <li>Username: <code>admin' --</code> lalu password bebas</li>
-            <li>Username: <code>' OR '1'='1</code> lalu password: <code>' OR '1'='1</code></li>
-            <li>Username: <code>' UNION SELECT 1,username,password FROM users --</code></li>
-        </ul>
-    </div>
-
-    <p><a href="secure.php">➡️ Lihat versi AMAN (prepared statement)</a></p>
+    <p><a href="secure.php">Ke Versi Secure</a></p>
 </div>
 </body>
 </html>
