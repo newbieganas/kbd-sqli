@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // VERSI AMAN: parameterized query, input tidak pernah jadi bagian string SQL
     $query = "SELECT * FROM users WHERE username = $1 AND password = $2";
     $res = pg_query_params($conn, $query, [$username, $password]);
 
@@ -33,8 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
 <div class="container secure">
-    <h1>🔒 Login (AMAN - Prepared Statement)</h1>
-    <p class="subtitle">Coba payload yang sama seperti di halaman vulnerable — di sini tidak akan tembus.</p>
+    <h1>Login (AMAN - Prepared Statement)</h1>
 
     <form method="POST">
         <label>Username</label>
@@ -57,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     <?php endif; ?>
 
-    <p><a href="vulnerable.php">⬅️ Kembali ke versi vulnerable</a></p>
+    <p><a href="vulnerable.php">Versi Rentan</a></p>
 </div>
 </body>
 </html>
